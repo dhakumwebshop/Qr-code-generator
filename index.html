@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="icon" type="image/png" href="img/logo1.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffefba, #ffffff);
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h2 {
+            font-weight: 600;
+            color: #007bff;
+        }
+        .btn-primary {
+            background: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .btn-success {
+            background: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #6c757d;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">QR Code Generator</h2>
+
+        <div class="card p-4 shadow-sm">
+            <div class="form-group">
+                <label for="qr-text">Enter Text or URL</label>
+                <input type="text" id="qr-text" class="form-control" placeholder="Enter text or URL" required>
+            </div>
+
+            <button class="btn btn-primary btn-block mt-2" onclick="generateQRCode()">Generate QR Code</button>
+
+            <div class="text-center mt-4">
+                <canvas id="qr-code"></canvas>
+            </div>
+
+            <button class="btn btn-success btn-block mt-3" id="download-btn" style="display: none;" onclick="downloadQRCode()">Download QR Code</button>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        Developed by <strong>Dhanushkumar P</strong>
+    </footer>
+
+    <script>
+        function generateQRCode() {
+            const qrText = document.getElementById('qr-text').value;
+            const qrCanvas = document.getElementById('qr-code');
+            const downloadBtn = document.getElementById('download-btn');
+
+            if (!qrText) {
+                alert('Please enter text or URL to generate QR code');
+                return;
+            }
+
+            // Generate the QR code using QRious
+            const qr = new QRious({
+                element: qrCanvas,
+                size: 300,
+                value: qrText
+            });
+
+            // Show the download button
+            downloadBtn.style.display = 'block';
+        }
+
+        function downloadQRCode() {
+            const qrCanvas = document.getElementById('qr-code');
+            const qrImage = qrCanvas.toDataURL('image/png'); // Convert canvas to PNG image
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = qrImage;
+            downloadLink.download = 'qrcode.png'; // Download filename
+            downloadLink.click();
+        }
+    </script>
+</body>
+</html>
