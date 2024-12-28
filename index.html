@@ -91,24 +91,22 @@
                 return;
             }
 
-            // Generate the QR code using QRious
             const qr = new QRious({
                 element: qrCanvas,
-                size: 300,
+                size: 100,
                 value: qrText
             });
 
-            // Show the download button
             downloadBtn.style.display = 'block';
         }
 
         function downloadQRCode() {
             const qrCanvas = document.getElementById('qr-code');
-            const qrImage = qrCanvas.toDataURL('image/png'); // Convert canvas to PNG image
+            const qrImage = qrCanvas.toDataURL('image/png'); 
 
             const downloadLink = document.createElement('a');
             downloadLink.href = qrImage;
-            downloadLink.download = 'qrcode.png'; // Download filename
+            downloadLink.download = 'qrcode.png';
             downloadLink.click();
         }
     </script>
